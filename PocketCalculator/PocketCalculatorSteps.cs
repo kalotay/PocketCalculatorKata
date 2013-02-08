@@ -14,11 +14,25 @@ namespace PocketCalculator
         {
             _calculator = new CasioCalculator();
         }
+
+        [Given(@"it is turned on")]
+        public void GivenItIsTurnedOn()
+        {
+            _calculator.TurnOn();
+        }
         
         [When(@"I press ""(.*)""")]
         public void WhenIPress(string button)
         {
-            _calculator.TurnOn();
+            switch (button)
+            {
+                case "AC":
+                    _calculator.TurnOn();
+                    break;
+                case "1":
+                    _calculator.PressOne();
+                    break;
+            }
         }
         
         [Then(@"the display shows ""(.*)""")]
@@ -35,6 +49,11 @@ namespace PocketCalculator
         public void TurnOn()
         {
             Display = 0m;
+        }
+
+        public void PressOne()
+        {
+            Display = 1m;
         }
     }
 }
