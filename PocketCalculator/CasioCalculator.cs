@@ -31,8 +31,8 @@
         {
             if (Display >= 999999999m) return;
 
-            var input = (byte) digit;
-            Display = _resetInput ? input : Display * 10m + input;
+            var input = (decimal) digit;
+            Display = _resetInput ? input : Display * 10m + ((Display >= 0)?input:-input);
             _resetInput = false;
         }
 
