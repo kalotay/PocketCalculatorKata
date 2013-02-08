@@ -40,7 +40,7 @@ namespace PocketCalculator
         }
         
         [Then(@"the display shows ""(.*)""")]
-        public void ThenTheDisplayShows(Decimal display)
+        public void ThenTheDisplayShows(string display)
         {
             Assert.That(_calculator.Display, Is.EqualTo(display));
         }

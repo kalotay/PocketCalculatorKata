@@ -2,34 +2,17 @@
 {
     public class CasioCalculator
     {
-        public decimal Display { get; private set; }
+        private decimal _numbers;
+        public string Display { get { return string.Format("{0}.", _numbers); } }
 
         public void TurnOn()
         {
-            Display = 0m;
-        }
-
-        public void PressOne()
-        {
-            Display = 1m;
-        }
-
-        public void PressTwo()
-        {
-            Display = 12m;
+            _numbers = 0m;
         }
 
         public void PressDigit(Digits digit)
         {
-            switch (digit)
-            {
-                case Digits.One:
-                    Display = 1m;
-                    break;
-                case Digits.Two:
-                    Display = 12m;
-                    break;
-            }
+            _numbers = _numbers * 10m + (byte) digit;
         }
     }
 
