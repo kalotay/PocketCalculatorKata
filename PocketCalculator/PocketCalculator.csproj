@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{841F5DD3-B58B-4045-AA65-3BB44D8ED514}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PocketCalculator</RootNamespace>
+    <AssemblyName>PocketCalculator</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TechTalk.SpecFlow">
+      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="features\backspace.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>backspace.feature</DependentUpon>
+    </Compile>
+    <Compile Include="features\changing_operation.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>changing_operation.feature</DependentUpon>
+    </Compile>
+    <Compile Include="features\clear.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>clear.feature</DependentUpon>
+    </Compile>
+    <Compile Include="features\decimal_maths.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>decimal_maths.feature</DependentUpon>
+    </Compile>
+    <Compile Include="features\entering_decimals.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>entering_decimals.feature</DependentUpon>
+    </Compile>
+    <Compile Include="features\entering_integers.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>entering_integers.feature</DependentUpon>
+    </Compile>
+    <Compile Include="features\integer_maths.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>integer_maths.feature</DependentUpon>
+    </Compile>
+    <Compile Include="features\memory.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>memory.feature</DependentUpon>
+    </Compile>
+    <Compile Include="features\negative_decimals.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>negative_decimals.feature</DependentUpon>
+    </Compile>
+    <Compile Include="features\negative_integers.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>negative_integers.feature</DependentUpon>
+    </Compile>
+    <Compile Include="features\pocket_calculator.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>pocket_calculator.feature</DependentUpon>
+    </Compile>
+    <Compile Include="features\square_root.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>square_root.feature</DependentUpon>
+    </Compile>
+    <Compile Include="PocketCalculatorSteps.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="features\backspace.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>backspace.feature.cs</LastGenOutput>
+    </None>
+    <None Include="features\changing_operation.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>changing_operation.feature.cs</LastGenOutput>
+    </None>
+    <None Include="features\clear.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>clear.feature.cs</LastGenOutput>
+    </None>
+    <None Include="features\decimal_maths.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>decimal_maths.feature.cs</LastGenOutput>
+    </None>
+    <None Include="features\entering_decimals.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>entering_decimals.feature.cs</LastGenOutput>
+    </None>
+    <None Include="features\entering_integers.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>entering_integers.feature.cs</LastGenOutput>
+    </None>
+    <None Include="features\integer_maths.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>integer_maths.feature.cs</LastGenOutput>
+    </None>
+    <None Include="features\memory.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>memory.feature.cs</LastGenOutput>
+    </None>
+    <None Include="features\negative_decimals.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>negative_decimals.feature.cs</LastGenOutput>
+    </None>
+    <None Include="features\negative_integers.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>negative_integers.feature.cs</LastGenOutput>
+    </None>
+    <None Include="features\pocket_calculator.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>pocket_calculator.feature.cs</LastGenOutput>
+    </None>
+    <None Include="features\square_root.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>square_root.feature.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
