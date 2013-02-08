@@ -77,6 +77,11 @@
             _buffer.AddToBuffer(_display);
             _input = 0m;
         }
+
+        public void PressPlusMinus()
+        {
+            _display = -_display;
+        }
     }
 
     internal class DivisionBuffer : Buffer

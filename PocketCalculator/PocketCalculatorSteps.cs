@@ -46,6 +46,9 @@ namespace PocketCalculator
                     case "/":
                         _calculator.PressSlash();
                         break;
+                    case "+/-":
+                        _calculator.PressPlusMinus();
+                        break;
                     default:
                         _calculator.PressDigit((Digits)byte.Parse(button));
                         break;
