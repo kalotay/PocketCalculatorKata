@@ -3,8 +3,17 @@
     public class CasioCalculator
     {
         private decimal _display;
-        private IBuffer _buffer;
         private decimal _input;
+        private IBuffer _buffer;
+
+        private readonly NullBuffer _nullBuffer;
+        private AdditionBuffer _addBuffer;
+
+        public CasioCalculator()
+        {
+            _nullBuffer = new NullBuffer();
+            _addBuffer = new AdditionBuffer();
+        }
 
         public string Display
         {
@@ -13,9 +22,7 @@
 
         public void PressAC()
         {
-            _display = 0m;
-            _input = 0m;
-            _buffer = new NullBuffer();
+            _buffer = _nullBuffer;
         }
 
         public void PressDigit(Digits digit)
@@ -29,14 +36,14 @@
         public void PressEqual()
         {
             _display = _buffer.ApplyTo(_display);
-            _buffer = new NullBuffer();
+            _buffer = _nullBuffer;
             _input = 0m;
         }
 
         public void PressPlus()
         {
             _display = _buffer.ApplyTo(_display);
-            _buffer = new AdditionBuffer();
+            _buffer = _addBuffer;
             _buffer.AddToBuffer(_display);
             _input = 0m;
         }
