@@ -5,7 +5,7 @@
         private decimal _numbers;
         public string Display { get { return string.Format("{0}.", _numbers); } }
 
-        public void TurnOn()
+        public void PressAC()
         {
             _numbers = 0m;
         }
