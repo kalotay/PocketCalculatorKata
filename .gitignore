@@ -1,3 +1,4 @@
 *.suo
 PocketCalculator/obj
 PocketCalculator/bin
+*.feature.cs
