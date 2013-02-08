@@ -58,7 +58,7 @@ namespace PocketCalculator
         }
         
         [Then(@"the display shows ""(.*)""")]
-        public void ThenTheDisplayShows(string display)
+        public void ThenTheDisplayShows(decimal display)
         {
             Assert.That(_calculator.Display, Is.EqualTo(display));
         }

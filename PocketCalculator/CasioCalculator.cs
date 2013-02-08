@@ -2,7 +2,6 @@
 {
     public class CasioCalculator
     {
-        private decimal _display;
         private decimal _input;
         private IBuffer _buffer;
 
@@ -21,10 +20,7 @@
             _divBuffer = new DivisionBuffer();
         }
 
-        public string Display
-        {
-            get { return string.Format("{0}.", _display); }
-        }
+        public decimal Display { get; private set; }
 
         public void PressAC()
         {
@@ -33,54 +29,54 @@
 
         public void PressDigit(Digits digit)
         {
-            if (_display >= 999999999m) return;
+            if (Display >= 999999999m) return;
 
             _input = _input * 10m + (byte) digit;
-            _display = _input;
+            Display = _input;
         }
 
         public void PressEqual()
         {
-            _display = _buffer.ApplyTo(_display);
+            Display = _buffer.ApplyTo(Display);
             _buffer = _nullBuffer;
             _input = 0m;
         }
 
         public void PressPlus()
         {
-            _display = _buffer.ApplyTo(_display);
+            Display = _buffer.ApplyTo(Display);
             _buffer = _addBuffer;
-            _buffer.AddToBuffer(_display);
+            _buffer.AddToBuffer(Display);
             _input = 0m;
         }
 
         public void PressMinus()
         {
-            _display = _buffer.ApplyTo(_display);
+            Display = _buffer.ApplyTo(Display);
             _buffer = _subBuffer;
-            _buffer.AddToBuffer(_display);
+            _buffer.AddToBuffer(Display);
             _input = 0m;
         }
 
         public void PressStar()
         {
-            _display = _buffer.ApplyTo(_display);
+            Display = _buffer.ApplyTo(Display);
             _buffer = _mulBuffer;
-            _buffer.AddToBuffer(_display);
+            _buffer.AddToBuffer(Display);
             _input = 0m;
         }
 
         public void PressSlash()
         {
-            _display = _buffer.ApplyTo(_display);
+            Display = _buffer.ApplyTo(Display);
             _buffer = _divBuffer;
-            _buffer.AddToBuffer(_display);
+            _buffer.AddToBuffer(Display);
             _input = 0m;
         }
 
         public void PressPlusMinus()
         {
-            _display = -_display;
+            Display = -Display;
         }
     }
 
