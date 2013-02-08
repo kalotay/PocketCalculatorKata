@@ -22,16 +22,23 @@ namespace PocketCalculator
         }
         
         [When(@"I press ""(.*)""")]
-        public void WhenIPress(string button)
+        public void WhenIPress(string buttons)
         {
-            switch (button)
+            foreach (var button in buttons.Split(' '))
             {
-                case "AC":
-                    _calculator.TurnOn();
-                    break;
-                case "1":
-                    _calculator.PressOne();
-                    break;
+                switch (button)
+                {
+                    case "AC":
+                        _calculator.TurnOn();
+                        break;
+                    case "1":
+                        _calculator.PressOne();
+                        break;
+                    case "2":
+                        _calculator.PressTwo();
+                        break;
+                }
+                
             }
         }
         

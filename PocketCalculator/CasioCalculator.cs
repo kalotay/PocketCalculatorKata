@@ -13,5 +13,10 @@
         {
             Display = 1m;
         }
+
+        public void PressTwo()
+        {
+            Display = 12m;
+        }
     }
 }

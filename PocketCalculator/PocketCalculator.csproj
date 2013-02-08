@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CasioCalculator.cs" />
     <Compile Include="features\backspace.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
