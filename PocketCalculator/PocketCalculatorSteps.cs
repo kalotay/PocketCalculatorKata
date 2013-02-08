@@ -31,11 +31,8 @@ namespace PocketCalculator
                     case "AC":
                         _calculator.TurnOn();
                         break;
-                    case "1":
-                        _calculator.PressOne();
-                        break;
-                    case "2":
-                        _calculator.PressTwo();
+                    default:
+                        _calculator.PressNumber((Digit)byte.Parse(button));
                         break;
                 }
                 
