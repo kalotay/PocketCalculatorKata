@@ -19,21 +19,21 @@
             Display = 12m;
         }
 
-        public void PressNumber(Digit number)
+        public void PressDigit(Digits digit)
         {
-            switch (number)
+            switch (digit)
             {
-                case Digit.One:
+                case Digits.One:
                     Display = 1m;
                     break;
-                case Digit.Two:
+                case Digits.Two:
                     Display = 12m;
                     break;
             }
         }
     }
 
-    public enum Digit:byte
+    public enum Digits:byte
     {
         Zero = 0,
         One,

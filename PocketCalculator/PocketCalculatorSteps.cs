@@ -32,7 +32,7 @@ namespace PocketCalculator
                         _calculator.TurnOn();
                         break;
                     default:
-                        _calculator.PressNumber((Digit)byte.Parse(button));
+                        _calculator.PressDigit((Digits)byte.Parse(button));
                         break;
                 }
                 
