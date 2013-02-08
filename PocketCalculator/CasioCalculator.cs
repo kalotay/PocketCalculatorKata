@@ -1,85 +1,114 @@
-﻿namespace PocketCalculator
+﻿using System;
+
+namespace PocketCalculator
 {
     public class CasioCalculator
     {
-        public decimal Display { get; private set; }
+        public decimal Display { get { return _mainRegister; } }
 
-        private readonly NullBuffer _nullBuffer;
-        private readonly AdditionBuffer _addBuffer;
-        private readonly SubtractionBuffer _subBuffer;
-        private readonly MultiplicationBuffer _mulBuffer;
-        private readonly DivisionBuffer _divBuffer;
-
-        private bool _resetInput;
-        private IBuffer _buffer;
+        private Func<decimal, decimal, decimal> _binaryop;
+        private decimal _mainRegister;
+        private decimal _auxRegitser;
+        private bool _resetScan;
 
         public CasioCalculator()
         {
-            _nullBuffer = new NullBuffer();
-            _addBuffer = new AdditionBuffer();
-            _subBuffer = new SubtractionBuffer();
-            _mulBuffer = new MultiplicationBuffer();
-            _divBuffer = new DivisionBuffer();
+            _binaryop = null;
         }
 
         public void PressAC()
         {
-            _buffer = _nullBuffer;
         }
 
         public void PressDigit(Digits digit)
         {
-            if (Display >= 999999999m) return;
+            var input = (decimal)digit;
 
-            var input = (decimal) digit;
-            Display = _resetInput ? input : Display * 10m + ((Display >= 0)?input:-input);
-            _resetInput = false;
+
+            if (_resetScan)
+            {
+                if (_binaryop != null && _auxRegitser == 0m)
+                {
+                    _auxRegitser = _mainRegister;
+                }
+                _mainRegister = 0;
+                _resetScan = false;
+            }
+
+            var newValue = _mainRegister * 10m + input;
+
+            if (newValue <= 9999999990m)
+            {
+                _mainRegister = newValue;
+            }
         }
 
         public void PressEqual()
         {
-            Display = _buffer.ApplyTo(Display);
-            _buffer = _nullBuffer;
-            AddToBuffer();
+            if (_binaryop != null)
+            {
+                _mainRegister = _binaryop(_auxRegitser, _mainRegister);
+            }
+            _binaryop = null;
+            _resetScan = true;
+            _auxRegitser = 0m;
         }
 
         public void PressPlus()
         {
-            if (!_resetInput) Display = _buffer.ApplyTo(Display);
-            _buffer = _addBuffer;
-            AddToBuffer();
+            if (_binaryop != null)
+            {
+                _mainRegister = _binaryop(_auxRegitser, _mainRegister);
+                _auxRegitser = 0m;
+            }
+            _binaryop = (a, b) => a + b;
+            _resetScan = true;
         }
 
         public void PressMinus()
         {
-            if (!_resetInput) Display = _buffer.ApplyTo(Display);
-            _buffer = _subBuffer;
-            AddToBuffer();
+            if (_binaryop != null)
+            {
+                _mainRegister = _binaryop(_auxRegitser, _mainRegister);
+                _auxRegitser = 0m;
+            }
+            _binaryop = (a, b) => a - b;
+            _resetScan = true;
         }
 
         public void PressStar()
         {
-            if (!_resetInput) Display = _buffer.ApplyTo(Display);
-            _buffer = _mulBuffer;
-            AddToBuffer();
+            if (_binaryop != null)
+            {
+                _mainRegister = _binaryop(_auxRegitser, _mainRegister);
+                _auxRegitser = 0m;
+            }
+            _binaryop = (a, b) => a*b;
+            _resetScan = true;
         }
 
         public void PressSlash()
         {
-            if (!_resetInput) Display = _buffer.ApplyTo(Display);
-            _buffer = _divBuffer;
-            AddToBuffer();
+            if (_binaryop != null)
+            {
+                _mainRegister = _binaryop(_auxRegitser, _mainRegister);
+                _auxRegitser = 0m;
+            }
+            _binaryop = (a, b) => a/b;
+            _resetScan = true;
         }
 
         public void PressPlusMinus()
         {
-            Display = -Display;
+            if (_binaryop != null && _resetScan)
+            {
+                _auxRegitser = _mainRegister;
+            }
+            _mainRegister = -_mainRegister;
         }
 
-        private void AddToBuffer()
+        public void PressDot()
         {
-            _buffer.AddToBuffer(Display);
-            _resetInput = true;
         }
     }
 }
