@@ -2,7 +2,6 @@
 {
     public class CasioCalculator
     {
-        private decimal _input;
         private IBuffer _buffer;
 
         private readonly NullBuffer _nullBuffer;
@@ -10,6 +9,7 @@
         private readonly SubtractionBuffer _subBuffer;
         private readonly MultiplicationBuffer _mulBuffer;
         private readonly DivisionBuffer _divBuffer;
+        private bool _resetDisplay;
 
         public CasioCalculator()
         {
@@ -29,49 +29,52 @@
 
         public void PressDigit(Digits digit)
         {
+            if (_resetDisplay) Display = 0;
+
+            _resetDisplay = false;
+
             if (Display >= 999999999m) return;
 
-            _input = _input * 10m + (byte) digit;
-            Display = _input;
+            Display = Display * 10m + (byte) digit;
         }
 
         public void PressEqual()
         {
+            _resetDisplay = true;
             Display = _buffer.ApplyTo(Display);
             _buffer = _nullBuffer;
-            _input = 0m;
         }
 
         public void PressPlus()
         {
+            _resetDisplay = true;
             Display = _buffer.ApplyTo(Display);
             _buffer = _addBuffer;
             _buffer.AddToBuffer(Display);
-            _input = 0m;
         }
 
         public void PressMinus()
         {
+            _resetDisplay = true;
             Display = _buffer.ApplyTo(Display);
             _buffer = _subBuffer;
             _buffer.AddToBuffer(Display);
-            _input = 0m;
         }
 
         public void PressStar()
         {
+            _resetDisplay = true;
             Display = _buffer.ApplyTo(Display);
             _buffer = _mulBuffer;
             _buffer.AddToBuffer(Display);
-            _input = 0m;
         }
 
         public void PressSlash()
         {
+            _resetDisplay = true;
             Display = _buffer.ApplyTo(Display);
             _buffer = _divBuffer;
             _buffer.AddToBuffer(Display);
-            _input = 0m;
         }
 
         public void PressPlusMinus()
