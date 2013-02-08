@@ -2,13 +2,16 @@
 {
     public class CasioCalculator
     {
-        private IBuffer _buffer;
+        public decimal Display { get; private set; }
 
         private readonly NullBuffer _nullBuffer;
         private readonly AdditionBuffer _addBuffer;
         private readonly SubtractionBuffer _subBuffer;
         private readonly MultiplicationBuffer _mulBuffer;
         private readonly DivisionBuffer _divBuffer;
+
+        private bool _resetInput;
+        private IBuffer _buffer;
 
         public CasioCalculator()
         {
@@ -19,11 +22,6 @@
             _divBuffer = new DivisionBuffer();
         }
 
-        public decimal Display { get; private set; }
-
-        private decimal _input;
-        private bool _resetInput;
-
         public void PressAC()
         {
             _buffer = _nullBuffer;
@@ -31,14 +29,11 @@
 
         public void PressDigit(Digits digit)
         {
-            if (_resetInput) _input = 0m;
-
-            _resetInput = false;
-
             if (Display >= 999999999m) return;
 
-            _input = _input*10m + (byte) digit;
-            Display = _input;
+            var input = (byte) digit;
+            Display = _resetInput ? input : Display * 10m + input;
+            _resetInput = false;
         }
 
         public void PressEqual()
