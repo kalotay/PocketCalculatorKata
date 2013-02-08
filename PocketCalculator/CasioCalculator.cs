@@ -12,6 +12,8 @@
 
         public void PressDigit(Digits digit)
         {
+            if (_numbers >= 999999999m) return;
+
             _numbers = _numbers * 10m + (byte) digit;
         }
     }
