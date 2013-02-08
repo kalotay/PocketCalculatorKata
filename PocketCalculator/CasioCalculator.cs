@@ -56,45 +56,32 @@ namespace PocketCalculator
 
         public void PressPlus()
         {
-            if (_binaryop != null)
-            {
-                _mainRegister = _binaryop(_auxRegitser, _mainRegister);
-                _auxRegitser = 0m;
-            }
-            _binaryop = (a, b) => a + b;
-            _resetScan = true;
+            PressOperation(_binaryop = (a, b) => a + b);
         }
 
         public void PressMinus()
         {
-            if (_binaryop != null)
-            {
-                _mainRegister = _binaryop(_auxRegitser, _mainRegister);
-                _auxRegitser = 0m;
-            }
-            _binaryop = (a, b) => a - b;
-            _resetScan = true;
+            PressOperation((a,b) => a - b);
         }
 
         public void PressStar()
         {
-            if (_binaryop != null)
-            {
-                _mainRegister = _binaryop(_auxRegitser, _mainRegister);
-                _auxRegitser = 0m;
-            }
-            _binaryop = (a, b) => a*b;
-            _resetScan = true;
+            PressOperation((a,b) => a * b);
         }
 
         public void PressSlash()
+        {
+            PressOperation((a,b) => a / b);
+        }
+
+        public void PressOperation(Func<decimal, decimal, decimal> operation)
         {
             if (_binaryop != null)
             {
                 _mainRegister = _binaryop(_auxRegitser, _mainRegister);
                 _auxRegitser = 0m;
             }
-            _binaryop = (a, b) => a/b;
+            _binaryop = operation;
             _resetScan = true;
         }
 
