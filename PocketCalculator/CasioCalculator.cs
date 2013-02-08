@@ -7,12 +7,18 @@
         private IBuffer _buffer;
 
         private readonly NullBuffer _nullBuffer;
-        private AdditionBuffer _addBuffer;
+        private readonly AdditionBuffer _addBuffer;
+        private readonly SubtractionBuffer _subBuffer;
+        private readonly MultiplicationBuffer _mulBuffer;
+        private readonly DivisionBuffer _divBuffer;
 
         public CasioCalculator()
         {
             _nullBuffer = new NullBuffer();
             _addBuffer = new AdditionBuffer();
+            _subBuffer = new SubtractionBuffer();
+            _mulBuffer = new MultiplicationBuffer();
+            _divBuffer = new DivisionBuffer();
         }
 
         public string Display
@@ -50,17 +56,50 @@
 
         public void PressMinus()
         {
-            _display = 0m;
+            _display = _buffer.ApplyTo(_display);
+            _buffer = _subBuffer;
+            _buffer.AddToBuffer(_display);
+            _input = 0m;
         }
 
         public void PressStar()
         {
-            _display = 0m;
+            _display = _buffer.ApplyTo(_display);
+            _buffer = _mulBuffer;
+            _buffer.AddToBuffer(_display);
+            _input = 0m;
         }
 
         public void PressSlash()
         {
-            _display = 0m;
+            _display = _buffer.ApplyTo(_display);
+            _buffer = _divBuffer;
+            _buffer.AddToBuffer(_display);
+            _input = 0m;
+        }
+    }
+
+    internal class DivisionBuffer : Buffer
+    {
+        public override decimal ApplyTo(decimal number)
+        {
+            return Store/number;
+        }
+    }
+
+    internal class MultiplicationBuffer : Buffer
+    {
+        public override decimal ApplyTo(decimal number)
+        {
+            return Store*number;
+        }
+    }
+
+    internal class SubtractionBuffer: Buffer
+    {
+        public override decimal ApplyTo(decimal number)
+        {
+            return Store - number;
         }
     }
 
@@ -76,18 +115,23 @@
         }
     }
 
-    public class AdditionBuffer : IBuffer
+    public abstract class Buffer: IBuffer
     {
-        private decimal _buffer;
+        protected decimal Store;
 
         public void AddToBuffer(decimal number)
         {
-            _buffer = number;
+            Store = number;
         }
 
-        public decimal ApplyTo(decimal number)
+        public abstract decimal ApplyTo(decimal number);
+    }
+
+    public class AdditionBuffer : Buffer
+    {
+        public override decimal ApplyTo(decimal number)
         {
-            return number + _buffer;
+            return number + Store;
         }
 
     }
