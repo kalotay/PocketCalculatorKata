@@ -16,6 +16,31 @@
 
             _numbers = _numbers * 10m + (byte) digit;
         }
+
+        public void PressEqual()
+        {
+            _numbers = 0m;
+        }
+
+        public void PressPlus()
+        {
+            _numbers = 0m;
+        }
+
+        public void PressMinus()
+        {
+            _numbers = 0m;
+        }
+
+        public void PressStar()
+        {
+            _numbers = 0m;
+        }
+
+        public void PressSlash()
+        {
+            _numbers = 0m;
+        }
     }
 
     public enum Digits:byte

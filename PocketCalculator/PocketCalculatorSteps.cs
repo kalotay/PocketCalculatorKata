@@ -18,7 +18,7 @@ namespace PocketCalculator
         [Given(@"it is turned on")]
         public void GivenItIsTurnedOn()
         {
-            _calculator.TurnOn();
+            _calculator.PressAC();
         }
         
         [When(@"I press ""(.*)""")]
@@ -29,7 +29,22 @@ namespace PocketCalculator
                 switch (button)
                 {
                     case "AC":
-                        _calculator.TurnOn();
+                        _calculator.PressAC();
+                        break;
+                    case "=":
+                        _calculator.PressEqual();
+                        break;
+                    case "+":
+                        _calculator.PressPlus();
+                        break;
+                    case "-":
+                        _calculator.PressMinus();
+                        break;
+                    case "*":
+                        _calculator.PressStar();
+                        break;
+                    case "/":
+                        _calculator.PressSlash();
                         break;
                     default:
                         _calculator.PressDigit((Digits)byte.Parse(button));
