@@ -9,7 +9,6 @@
         private readonly SubtractionBuffer _subBuffer;
         private readonly MultiplicationBuffer _mulBuffer;
         private readonly DivisionBuffer _divBuffer;
-        private bool _resetDisplay;
 
         public CasioCalculator()
         {
@@ -22,6 +21,9 @@
 
         public decimal Display { get; private set; }
 
+        private decimal _input;
+        private bool _resetInput;
+
         public void PressAC()
         {
             _buffer = _nullBuffer;
@@ -29,57 +31,60 @@
 
         public void PressDigit(Digits digit)
         {
-            if (_resetDisplay) Display = 0;
+            if (_resetInput) _input = 0m;
 
-            _resetDisplay = false;
+            _resetInput = false;
 
             if (Display >= 999999999m) return;
 
-            Display = Display * 10m + (byte) digit;
+            _input = _input*10m + (byte) digit;
+            Display = _input;
         }
 
         public void PressEqual()
         {
-            _resetDisplay = true;
             Display = _buffer.ApplyTo(Display);
             _buffer = _nullBuffer;
+            AddToBuffer();
         }
 
         public void PressPlus()
         {
-            _resetDisplay = true;
-            Display = _buffer.ApplyTo(Display);
+            if (!_resetInput) Display = _buffer.ApplyTo(Display);
             _buffer = _addBuffer;
-            _buffer.AddToBuffer(Display);
+            AddToBuffer();
         }
 
         public void PressMinus()
         {
-            _resetDisplay = true;
-            Display = _buffer.ApplyTo(Display);
+            if (!_resetInput) Display = _buffer.ApplyTo(Display);
             _buffer = _subBuffer;
-            _buffer.AddToBuffer(Display);
+            AddToBuffer();
         }
 
         public void PressStar()
         {
-            _resetDisplay = true;
-            Display = _buffer.ApplyTo(Display);
+            if (!_resetInput) Display = _buffer.ApplyTo(Display);
             _buffer = _mulBuffer;
-            _buffer.AddToBuffer(Display);
+            AddToBuffer();
         }
 
         public void PressSlash()
         {
-            _resetDisplay = true;
-            Display = _buffer.ApplyTo(Display);
+            if (!_resetInput) Display = _buffer.ApplyTo(Display);
             _buffer = _divBuffer;
-            _buffer.AddToBuffer(Display);
+            AddToBuffer();
         }
 
         public void PressPlusMinus()
         {
             Display = -Display;
+        }
+
+        private void AddToBuffer()
+        {
+            _buffer.AddToBuffer(Display);
+            _resetInput = true;
         }
     }
 
@@ -99,7 +104,7 @@
         }
     }
 
-    internal class SubtractionBuffer: Buffer
+    internal class SubtractionBuffer : Buffer
     {
         public override decimal ApplyTo(decimal number)
         {
@@ -119,7 +124,7 @@
         }
     }
 
-    public abstract class Buffer: IBuffer
+    public abstract class Buffer : IBuffer
     {
         protected decimal Store;
 
@@ -137,7 +142,6 @@
         {
             return number + Store;
         }
-
     }
 
     internal interface IBuffer
@@ -147,7 +151,7 @@
         decimal ApplyTo(decimal number);
     }
 
-    public enum Digits:byte
+    public enum Digits : byte
     {
         Zero = 0,
         One,
