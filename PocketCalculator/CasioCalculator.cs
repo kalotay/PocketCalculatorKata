@@ -82,16 +82,14 @@ namespace PocketCalculator
 
         public void PressMPlus()
         {
-            EvaluateBinOp();
+            PressBinaryOperation(null);
             _memoryRegister += _mainRegister;
-            _resetScan = true;
         }
 
         public void PressMMinus()
         {
-            EvaluateBinOp();
+            PressBinaryOperation(null);
             _memoryRegister -= _mainRegister;
-            _resetScan = true;
         }
 
         public void PressMR()
@@ -99,20 +97,20 @@ namespace PocketCalculator
             _mainRegister = _memoryRegister;
         }
 
-        public void PressBinaryOperation(Func<decimal, decimal, decimal> operation)
+        public void PressSqrt()
         {
-            EvaluateBinOp();
-            _binaryop = operation;
-            _flush = true;
-            _resetScan = true;
+            _mainRegister = (decimal)Math.Sqrt((double)_mainRegister);
         }
 
-        private void EvaluateBinOp()
+        public void PressBinaryOperation(Func<decimal, decimal, decimal> operation)
         {
             if (_binaryop != null)
             {
                 _mainRegister = _binaryop(_auxRegitser, _mainRegister);
             }
+            _binaryop = operation;
+            _flush = true;
+            _resetScan = true;
         }
 
         private void MaybeFlush()
@@ -120,11 +118,6 @@ namespace PocketCalculator
             if (!_flush) return;
             _auxRegitser = _mainRegister;
             _flush = false;
-        }
-
-        public void PressSqrt()
-        {
-            _mainRegister = (decimal)Math.Sqrt((double)_mainRegister);
         }
     }
 }
