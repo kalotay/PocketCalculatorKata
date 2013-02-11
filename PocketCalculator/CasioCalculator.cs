@@ -9,6 +9,7 @@ namespace PocketCalculator
         private Func<decimal, decimal, decimal> _binaryop;
         private decimal _mainRegister;
         private decimal _auxRegitser;
+        private bool _flush;
         private bool _resetScan;
 
         public CasioCalculator()
@@ -24,13 +25,14 @@ namespace PocketCalculator
         {
             var input = (decimal)digit;
 
+            if (_flush)
+            {
+                _auxRegitser = _mainRegister;
+                _flush = false;
+            }
 
             if (_resetScan)
             {
-                if (_binaryop != null && _auxRegitser == 0m)
-                {
-                    _auxRegitser = _mainRegister;
-                }
                 _mainRegister = 0;
                 _resetScan = false;
             }
@@ -56,40 +58,41 @@ namespace PocketCalculator
 
         public void PressPlus()
         {
-            PressOperation(_binaryop = (a, b) => a + b);
+            PressBinaryOperation(_binaryop = (a, b) => a + b);
         }
 
         public void PressMinus()
         {
-            PressOperation((a,b) => a - b);
+            PressBinaryOperation((a,b) => a - b);
         }
 
         public void PressStar()
         {
-            PressOperation((a,b) => a * b);
+            PressBinaryOperation((a,b) => a * b);
         }
 
         public void PressSlash()
         {
-            PressOperation((a,b) => a / b);
+            PressBinaryOperation((a,b) => a / b);
         }
 
-        public void PressOperation(Func<decimal, decimal, decimal> operation)
+        public void PressBinaryOperation(Func<decimal, decimal, decimal> operation)
         {
             if (_binaryop != null)
             {
                 _mainRegister = _binaryop(_auxRegitser, _mainRegister);
-                _auxRegitser = 0m;
             }
             _binaryop = operation;
+            _flush = true;
             _resetScan = true;
         }
 
         public void PressPlusMinus()
         {
-            if (_binaryop != null && _resetScan)
+            if (_flush)
             {
                 _auxRegitser = _mainRegister;
+                _flush = false;
             }
             _mainRegister = -_mainRegister;
         }
