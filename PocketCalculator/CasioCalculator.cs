@@ -14,6 +14,9 @@ namespace PocketCalculator
 
         public void PressAC()
         {
+            _mainRegister = 0m;
+            _auxRegitser = 0m;
+
         }
 
         public void PressDigit(Digits digit)
@@ -69,6 +72,11 @@ namespace PocketCalculator
 
         public void PressDot()
         {
+        }
+
+        public void PressC()
+        {
+            _mainRegister = 0m;
         }
 
         public void PressBinaryOperation(Func<decimal, decimal, decimal> operation)

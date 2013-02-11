@@ -52,6 +52,9 @@ namespace PocketCalculator
                     case ".":
                         _calculator.PressDot();
                         break;
+                    case "C":
+                        _calculator.PressC();
+                        break;
                     default:
                         _calculator.PressDigit((Digits)byte.Parse(button));
                         break;
