@@ -94,11 +94,11 @@ namespace PocketCalculator.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Square root of a square number")]
-        [NUnit.Framework.CategoryAttribute("square-root")]
+        [NUnit.Framework.CategoryAttribute("squareroot")]
         public virtual void SquareRootOfASquareNumber()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Square root of a square number", new string[] {
-                        "square-root"});
+                        "squareroot"});
 #line 14
   this.ScenarioSetup(scenarioInfo);
 #line 5
@@ -113,12 +113,12 @@ namespace PocketCalculator.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Square root of a non-square number")]
-        [NUnit.Framework.CategoryAttribute("square-root")]
+        [NUnit.Framework.CategoryAttribute("squareroot")]
         [NUnit.Framework.CategoryAttribute("full")]
         public virtual void SquareRootOfANon_SquareNumber()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Square root of a non-square number", new string[] {
-                        "square-root",
+                        "squareroot",
                         "full"});
 #line 19
   this.ScenarioSetup(scenarioInfo);
@@ -134,11 +134,11 @@ namespace PocketCalculator.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Square root at the start of a calculation")]
-        [NUnit.Framework.CategoryAttribute("square-root")]
+        [NUnit.Framework.CategoryAttribute("squareroot")]
         public virtual void SquareRootAtTheStartOfACalculation()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Square root at the start of a calculation", new string[] {
-                        "square-root"});
+                        "squareroot"});
 #line 24
   this.ScenarioSetup(scenarioInfo);
 #line 5
@@ -153,11 +153,11 @@ namespace PocketCalculator.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Square root at the end of a calculation")]
-        [NUnit.Framework.CategoryAttribute("square-root")]
+        [NUnit.Framework.CategoryAttribute("squareroot")]
         public virtual void SquareRootAtTheEndOfACalculation()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Square root at the end of a calculation", new string[] {
-                        "square-root"});
+                        "squareroot"});
 #line 29
   this.ScenarioSetup(scenarioInfo);
 #line 5
@@ -176,11 +176,11 @@ namespace PocketCalculator.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Trying to make the square root of zero negative")]
-        [NUnit.Framework.CategoryAttribute("square-root")]
+        [NUnit.Framework.CategoryAttribute("squareroot")]
         public virtual void TryingToMakeTheSquareRootOfZeroNegative()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Trying to make the square root of zero negative", new string[] {
-                        "square-root"});
+                        "squareroot"});
 #line 36
   this.ScenarioSetup(scenarioInfo);
 #line 5
@@ -195,12 +195,12 @@ namespace PocketCalculator.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Storing a square root calculation in memory")]
-        [NUnit.Framework.CategoryAttribute("square-root")]
+        [NUnit.Framework.CategoryAttribute("squareroot")]
         [NUnit.Framework.CategoryAttribute("memory")]
         public virtual void StoringASquareRootCalculationInMemory()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Storing a square root calculation in memory", new string[] {
-                        "square-root",
+                        "squareroot",
                         "memory"});
 #line 41
   this.ScenarioSetup(scenarioInfo);

@@ -63,6 +63,9 @@ namespace PocketCalculator
                     case "MR":
                         _calculator.PressMR();
                         break;
+                    case "SQRT":
+                        _calculator.PressSqrt();
+                        break;
                     default:
                         _calculator.PressDigit((Digits)byte.Parse(button));
                         break;

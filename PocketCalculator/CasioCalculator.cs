@@ -121,5 +121,10 @@ namespace PocketCalculator
             _auxRegitser = _mainRegister;
             _flush = false;
         }
+
+        public void PressSqrt()
+        {
+            _mainRegister = (decimal)Math.Sqrt((double)_mainRegister);
+        }
     }
 }
