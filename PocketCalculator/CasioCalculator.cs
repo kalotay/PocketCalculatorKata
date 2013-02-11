@@ -12,11 +12,6 @@ namespace PocketCalculator
         private bool _flush;
         private bool _resetScan;
 
-        public CasioCalculator()
-        {
-            _binaryop = null;
-        }
-
         public void PressAC()
         {
         }
@@ -25,11 +20,7 @@ namespace PocketCalculator
         {
             var input = (decimal)digit;
 
-            if (_flush)
-            {
-                _auxRegitser = _mainRegister;
-                _flush = false;
-            }
+            MaybeFlush();
 
             if (_resetScan)
             {
@@ -47,18 +38,12 @@ namespace PocketCalculator
 
         public void PressEqual()
         {
-            if (_binaryop != null)
-            {
-                _mainRegister = _binaryop(_auxRegitser, _mainRegister);
-            }
-            _binaryop = null;
-            _resetScan = true;
-            _auxRegitser = 0m;
+            PressBinaryOperation(null);
         }
 
         public void PressPlus()
         {
-            PressBinaryOperation(_binaryop = (a, b) => a + b);
+            PressBinaryOperation((a, b) => a + b);
         }
 
         public void PressMinus()
@@ -76,6 +61,16 @@ namespace PocketCalculator
             PressBinaryOperation((a,b) => a / b);
         }
 
+        public void PressPlusMinus()
+        {
+            MaybeFlush();
+            _mainRegister = -_mainRegister;
+        }
+
+        public void PressDot()
+        {
+        }
+
         public void PressBinaryOperation(Func<decimal, decimal, decimal> operation)
         {
             if (_binaryop != null)
@@ -87,18 +82,11 @@ namespace PocketCalculator
             _resetScan = true;
         }
 
-        public void PressPlusMinus()
+        private void MaybeFlush()
         {
-            if (_flush)
-            {
-                _auxRegitser = _mainRegister;
-                _flush = false;
-            }
-            _mainRegister = -_mainRegister;
-        }
-
-        public void PressDot()
-        {
+            if (!_flush) return;
+            _auxRegitser = _mainRegister;
+            _flush = false;
         }
     }
 }
