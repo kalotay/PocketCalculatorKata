@@ -21,15 +21,15 @@ namespace PocketCalculator
 
         public void PressDigit(Digits digit)
         {
-            var input = (decimal)digit;
-
             MaybeFlush();
-
             if (_resetScan)
             {
                 _mainRegister = 0;
                 _resetScan = false;
             }
+
+            var absInput = (decimal)digit;
+            var input = (_mainRegister < 0m) ? -absInput : absInput;
 
             var newValue = _mainRegister * 10m + input;
 
