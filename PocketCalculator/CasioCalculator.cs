@@ -11,6 +11,7 @@ namespace PocketCalculator
         private decimal _auxRegitser;
         private bool _flush;
         private bool _resetScan;
+        private decimal _memoryRegister;
 
         public void PressAC()
         {
@@ -79,15 +80,39 @@ namespace PocketCalculator
             _mainRegister = 0m;
         }
 
+        public void PressMPlus()
+        {
+            EvaluateBinOp();
+            _memoryRegister += _mainRegister;
+            _resetScan = true;
+        }
+
+        public void PressMMinus()
+        {
+            EvaluateBinOp();
+            _memoryRegister -= _mainRegister;
+            _resetScan = true;
+        }
+
+        public void PressMR()
+        {
+            _mainRegister = _memoryRegister;
+        }
+
         public void PressBinaryOperation(Func<decimal, decimal, decimal> operation)
+        {
+            EvaluateBinOp();
+            _binaryop = operation;
+            _flush = true;
+            _resetScan = true;
+        }
+
+        private void EvaluateBinOp()
         {
             if (_binaryop != null)
             {
                 _mainRegister = _binaryop(_auxRegitser, _mainRegister);
             }
-            _binaryop = operation;
-            _flush = true;
-            _resetScan = true;
         }
 
         private void MaybeFlush()

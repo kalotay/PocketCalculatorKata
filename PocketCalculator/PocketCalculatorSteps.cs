@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using TechTalk.SpecFlow;
 
 namespace PocketCalculator
@@ -54,6 +53,15 @@ namespace PocketCalculator
                         break;
                     case "C":
                         _calculator.PressC();
+                        break;
+                    case "M+":
+                        _calculator.PressMPlus();
+                        break;
+                    case "M-":
+                        _calculator.PressMMinus();
+                        break;
+                    case "MR":
+                        _calculator.PressMR();
                         break;
                     default:
                         _calculator.PressDigit((Digits)byte.Parse(button));
