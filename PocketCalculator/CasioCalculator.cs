@@ -1,23 +1,36 @@
-﻿using System;
-
-namespace PocketCalculator
+﻿namespace PocketCalculator
 {
     public class CasioCalculator
     {
-        public decimal Display { get { return _mainRegister; } }
+        public enum OperationFlags
+        {
+            None,
+            Add,
+            Sub,
+            Mul,
+            Div
+        }
 
-        private Func<decimal, decimal, decimal> _binaryop;
-        private decimal _mainRegister;
-        private decimal _auxRegitser;
+        public CasioCalculator()
+        {
+            _mainRegister = new DecimalRegister();
+            _auxRegitser = new DecimalRegister();
+            _memoryRegister = new DecimalRegister();
+        }
+
+        public decimal Display { get { return _mainRegister.ToDecimal(); } }
+
+        private readonly DecimalRegister _mainRegister;
+        private readonly DecimalRegister _auxRegitser;
         private bool _flush;
         private bool _resetScan;
-        private decimal _memoryRegister;
+        private readonly DecimalRegister _memoryRegister;
+        private OperationFlags _operationFlag;
 
         public void PressAC()
         {
-            _mainRegister = 0m;
-            _auxRegitser = 0m;
-
+            _mainRegister.Clear();
+            _auxRegitser.Clear();
         }
 
         public void PressDigit(Digits digit)
@@ -25,50 +38,42 @@ namespace PocketCalculator
             MaybeFlush();
             if (_resetScan)
             {
-                _mainRegister = 0;
+                _mainRegister.Clear();
                 _resetScan = false;
             }
 
-            var absInput = (decimal)digit;
-            var input = (_mainRegister < 0m) ? -absInput : absInput;
-
-            var newValue = _mainRegister * 10m + input;
-
-            if (newValue <= 9999999990m)
-            {
-                _mainRegister = newValue;
-            }
+            _mainRegister.Push(digit);
         }
 
         public void PressEqual()
         {
-            PressBinaryOperation(null);
+            PressBinaryOperation(OperationFlags.None);
         }
 
         public void PressPlus()
         {
-            PressBinaryOperation((a, b) => a + b);
+            PressBinaryOperation(OperationFlags.Add);
         }
 
         public void PressMinus()
         {
-            PressBinaryOperation((a,b) => a - b);
+            PressBinaryOperation(OperationFlags.Sub);
         }
 
         public void PressStar()
         {
-            PressBinaryOperation((a,b) => a * b);
+            PressBinaryOperation(OperationFlags.Mul);
         }
 
         public void PressSlash()
         {
-            PressBinaryOperation((a,b) => a / b);
+            PressBinaryOperation(OperationFlags.Div);
         }
 
         public void PressPlusMinus()
         {
             MaybeFlush();
-            _mainRegister = -_mainRegister;
+            _mainRegister.ChangeSign();
         }
 
         public void PressDot()
@@ -77,38 +82,49 @@ namespace PocketCalculator
 
         public void PressC()
         {
-            _mainRegister = 0m;
+            _mainRegister.Clear();
         }
 
         public void PressMPlus()
         {
-            PressBinaryOperation(null);
-            _memoryRegister += _mainRegister;
+            PressBinaryOperation(OperationFlags.None);
+            _memoryRegister.Add(_memoryRegister, _mainRegister);
         }
 
         public void PressMMinus()
         {
-            PressBinaryOperation(null);
-            _memoryRegister -= _mainRegister;
+            PressBinaryOperation(OperationFlags.None);
+            _memoryRegister.Sub(_memoryRegister, _mainRegister);
         }
 
         public void PressMR()
         {
-            _mainRegister = _memoryRegister;
+            _mainRegister.Copy(_memoryRegister);
         }
 
         public void PressSqrt()
         {
-            _mainRegister = (decimal)Math.Sqrt((double)_mainRegister);
+            _mainRegister.Sqrt();
         }
 
-        public void PressBinaryOperation(Func<decimal, decimal, decimal> operation)
+        public void PressBinaryOperation(OperationFlags operation)
         {
-            if (_binaryop != null)
+            switch (_operationFlag)
             {
-                _mainRegister = _binaryop(_auxRegitser, _mainRegister);
+                case OperationFlags.Add:
+                    _mainRegister.Add(_auxRegitser, _mainRegister);
+                    break;
+                case OperationFlags.Sub:
+                    _mainRegister.Sub(_auxRegitser, _mainRegister);
+                    break;
+                case OperationFlags.Mul:
+                    _mainRegister.Mul(_auxRegitser, _mainRegister);
+                    break;
+                case OperationFlags.Div:
+                    _mainRegister.Div(_auxRegitser, _mainRegister);
+                    break;
             }
-            _binaryop = operation;
+            _operationFlag = operation;
             _flush = true;
             _resetScan = true;
         }
@@ -116,7 +132,7 @@ namespace PocketCalculator
         private void MaybeFlush()
         {
             if (!_flush) return;
-            _auxRegitser = _mainRegister;
+            _auxRegitser.Copy(_mainRegister);
             _flush = false;
         }
     }
